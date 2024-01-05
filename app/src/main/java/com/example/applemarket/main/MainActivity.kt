@@ -7,12 +7,14 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.Detail.DetailActivity
+import com.example.applemarket.PostData
 import com.example.applemarket.PostData.totalPost
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
-    private val adapter by lazy { MainAdapter(mutableListOf()) }
+    private val adapter by lazy { MainAdapter(mutableListOf(), viewModel) }
 
     private val noticeBuilder by lazy {
         NotificationCompat.Builder(this, "main-channel")
@@ -36,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewModel.loadList()
         init()
     }
 
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setDetailBtn()
+        setDeleteBtn()
     }
 
     /**
@@ -80,6 +82,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * TODO 롱클릭시 액션 설정
+     *
+     * 다이얼로그 출력
+     */
+    private fun setDeleteBtn() {
+        adapter.itemLongClick = object : MainAdapter.ItemLongClick {
+            override fun onLongClick(view: View, position: Int) {
+                setDelDialog(position)
+            }
+        }
+    }
+    private fun setDelDialog(position:Int) {
+        AlertDialog.Builder(this)
+            .setIcon(R.drawable.img_main_chat_16dp)
+            .setTitle("상품 삭제")
+            .setMessage("상품을 정말로 삭제하시겠습니까?")
+            .setPositiveButton("확인") { _, _ ->
+                viewModel.deletePost(position)
+            }
+            .setNegativeButton("취소", null)
+            .show()
+    }
     /**
      * TODO
      * 안드로이드 백 버튼 클릭시 다이얼로그
@@ -132,6 +157,6 @@ class MainActivity : AppCompatActivity() {
             setContentText("선택한 키워드에 대한 알림이 도착햇습니다!")
         }
 
-        noticeManager.notify(11, noticeBuilder.build())
+        noticeManager.notify(1, noticeBuilder.build())
     }
 }

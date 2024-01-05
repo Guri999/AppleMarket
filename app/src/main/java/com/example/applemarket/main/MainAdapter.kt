@@ -1,21 +1,30 @@
 package com.example.applemarket.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.Post
+import com.example.applemarket.PostData
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ItemMainPostBinding
 
-class MainAdapter(private var data: MutableList<Post>) : RecyclerView.Adapter<MainAdapter.Holder>() {
+class MainAdapter(private var data: MutableList<Post>,private val viewModel: MainViewModel) : RecyclerView.Adapter<MainAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
+
     }
 
     var itemClick : ItemClick? = null
 
+    interface ItemLongClick{
+
+        fun onLongClick(view: View, position: Int)
+    }
+
+    var itemLongClick : ItemLongClick? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemMainPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
@@ -29,10 +38,18 @@ class MainAdapter(private var data: MutableList<Post>) : RecyclerView.Adapter<Ma
         return position.toLong()
     }
 
+    /**
+     * TODO 데이터 갱신
+     *
+     * @param newData 라이브 데이터는 실시간으로 totalPost가 변하는지 관찰중 임으로
+     *
+     * 변화가 있다면 데이터를 갱신할것이다
+     */
     fun getData(newData: MutableList<Post>){
         data = newData
         notifyDataSetChanged()
     }
+
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.itemView.setOnClickListener {
@@ -47,8 +64,22 @@ class MainAdapter(private var data: MutableList<Post>) : RecyclerView.Adapter<Ma
     }
         holder.tvChat.text = data[position].chat.toString()
         holder.tvLike.text = data[position].like.toString()
+
+        onDeletePost(holder,position)
     }
 
+    /**
+     * TODO 롱클릭 리스너를 사용해서 다이얼로그를 출력
+     *
+     * @param holder 리사이클러뷰 각 테이블의 위젯
+     * @param position 위치
+     */
+    fun onDeletePost(holder: Holder, position: Int) {
+        holder.itemView.setOnLongClickListener {
+            itemLongClick?.onLongClick(it, position)
+            true
+        }
+    }
     inner class Holder(val binding: ItemMainPostBinding) : RecyclerView.ViewHolder(binding.root) {
         val ivPost = binding.ivMainPost
         val tvName = binding.tvMainName
