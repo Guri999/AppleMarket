@@ -33,7 +33,7 @@ object PostData {
                 tokens[0].toInt(),
                 resource,
                 tokens[2],
-                tokens[3].replace("\\n", "\n"),
+                tokens[3].replace("\\n", "\n").replace(" + ", "").replace("\"", ""),
                 tokens[4],
                 tokens[5].toInt(),
                 tokens[6],

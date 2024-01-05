@@ -2,6 +2,8 @@ package com.example.applemarket.main
 
 import android.app.Application
 import android.content.Context
+import android.icu.text.Transliterator.Position
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,12 +16,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val totalPost: LiveData<MutableList<Post>> get() = _totalPost
     init {
-        loadList()
-    }
-
-    fun loadList() {
         val context = getApplication<Application>().applicationContext
         context.loadList(context)
+        _totalPost.value = PostData.totalPost
+    }
+
+    fun deletePost(position: Int) {
+        PostData.totalPost.removeAt(position)
         _totalPost.value = PostData.totalPost
     }
 }

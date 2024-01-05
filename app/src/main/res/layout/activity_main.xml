@@ -57,15 +57,21 @@
             android:id="@+id/rc_main_post"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fa_main_fab"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="end|bottom"
-            android:src="@drawable/img_main_downarrow"
-            android:rotation="270"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_main_floating"
+            app:backgroundTint="@color/fab"
+            app:fabSize="normal"
+            app:fabCustomSize="32dp"
+            app:maxImageSize="12dp"
             android:layout_margin="16dp"
-            android:background="@color/white"/>
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
