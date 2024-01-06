@@ -72,7 +72,7 @@ class DetailActivity : AppCompatActivity() {
      */
     private fun setLikeBtn(post: Post){
         binding.ivDetailLike.setOnClickListener {
-            if (!post.userlike) Snackbar.make(binding.tvDetailPrice,"관심 목록에 추가되었습니다",Snackbar.LENGTH_LONG).show()
+            if (post.userlike.not()) Snackbar.make(binding.tvDetailPrice,"관심 목록에 추가되었습니다",Snackbar.LENGTH_LONG).show()
             viewModel.onClickLike(post)
         }
     }

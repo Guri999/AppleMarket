@@ -15,5 +15,6 @@
     <string name="dialog_end_again">정말 종료하시겠습니까?</string>
     <!--Notice-->
     <string name="notice_keyword">키워드 알림</string>
+    <string name="notice_keyword_info">선택한 키워드 물건 알림</string>
     <string name="notice_keyword_message">선택한 키워드에 대한 알림이 도착햇습니다!</string>
 </resources>

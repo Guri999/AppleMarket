@@ -3,10 +3,12 @@ package com.example.applemarket.main
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
@@ -104,10 +106,10 @@ class MainActivity : AppCompatActivity() {
      * 다시 리사이클러뷰 관련 코드로 변경
      */
     private fun setFab() {
-        binding.rcMainPost.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.rcMainPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(-1)){
+                if (!recyclerView.canScrollVertically(-1)) {
                     binding.faMainFab.animate().alpha(0f).setDuration(300).withEndAction {
                         binding.faMainFab.visibility = View.GONE
                     }
@@ -120,11 +122,13 @@ class MainActivity : AppCompatActivity() {
 
         onClickFab()
     }
-    private fun onClickFab(){
-        binding.faMainFab.setOnClickListener{
+
+    private fun onClickFab() {
+        binding.faMainFab.setOnClickListener {
             binding.rcMainPost.scrollToPosition(0)
         }
     }
+
     /**
      * TODO 롱클릭시 액션 설정
      *
@@ -137,7 +141,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun setDelDialog(position:Int) {
+
+    /**
+     * 포스트 삭제 다이얼로그
+     *
+     * 기본 다이얼로그로 제작
+     */
+    private fun setDelDialog(position: Int) {
         AlertDialog.Builder(this)
             .setIcon(R.drawable.img_main_chat_16dp)
             .setTitle(getString(R.string.dialog_del_product))
@@ -148,21 +158,33 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(getString(R.string.common_cancel), null)
             .show()
     }
+
     /**
      * TODO
      * 안드로이드 백 버튼 클릭시 다이얼로그
+     *
+     * 커스텀 다이얼로그로 제작, 기본과 유사하지만 볼드체로 되어있음
      */
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         AlertDialog.Builder(this)
-            .setIcon(R.drawable.img_main_chat_16dp)
-            .setTitle(getString(R.string.common_end))
-            .setMessage(getString(R.string.dialog_end_again))
-            .setPositiveButton(getString(R.string.common_confirm)) { _, _ ->
-                super.onBackPressed()
+            .setView(layoutInflater.inflate(R.layout.main_dialog, null))
+            .create()
+            .let { dialog ->
+                dialog.setOnShowListener {
+                    val confirm = dialog.findViewById<TextView>(R.id.tv_dia_confirm)
+                    val cancel = dialog.findViewById<TextView>(R.id.tv_dia_cancel)
+
+                    confirm?.setOnClickListener {
+                        dialog.dismiss()
+                        super.onBackPressed()
+                    }
+                    cancel?.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                }
+                dialog.show()
             }
-            .setNegativeButton(getString(R.string.common_cancel), null)
-            .show()
     }
 
     /**
@@ -179,16 +201,16 @@ class MainActivity : AppCompatActivity() {
         noticeManager.createNotificationChannel(
             NotificationChannel(
                 "main-channel",
-                "키워드 알림",
+                getString(R.string.notice_keyword),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "선택한 키워드 물건 알림"
+                description = getString(R.string.notice_keyword_info)
                 /**
                 setSound(
-                    RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setUsage(AudioAttributes.USAGE_ALARM).build()
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+                AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM).build()
                 )*/
                 enableVibration(true)
             }
