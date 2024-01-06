@@ -5,4 +5,15 @@
     <string name="detail_chat">채팅하기</string>
     <string name="all_money">원</string>
     <string name="main_naebaecam">내배캠동</string>
+
+    <!-- dialog -->
+    <string name="dialog_del_product">상품 삭제</string>
+    <string name="dialog_del_again">상품을 정말로 삭제하시겠습니까?</string>
+    <string name="common_confirm">확인</string>
+    <string name="common_cancel">취소</string>
+    <string name="common_end">종료</string>
+    <string name="dialog_end_again">정말 종료하시겠습니까?</string>
+    <!--Notice-->
+    <string name="notice_keyword">키워드 알림</string>
+    <string name="notice_keyword_message">선택한 키워드에 대한 알림이 도착햇습니다!</string>
 </resources>

@@ -140,12 +140,12 @@ class MainActivity : AppCompatActivity() {
     private fun setDelDialog(position:Int) {
         AlertDialog.Builder(this)
             .setIcon(R.drawable.img_main_chat_16dp)
-            .setTitle("상품 삭제")
-            .setMessage("상품을 정말로 삭제하시겠습니까?")
-            .setPositiveButton("확인") { _, _ ->
+            .setTitle(getString(R.string.dialog_del_product))
+            .setMessage(getString(R.string.dialog_del_again))
+            .setPositiveButton(getString(R.string.common_confirm)) { _, _ ->
                 viewModel.deletePost(position)
             }
-            .setNegativeButton("취소", null)
+            .setNegativeButton(getString(R.string.common_cancel), null)
             .show()
     }
     /**
@@ -156,12 +156,12 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         AlertDialog.Builder(this)
             .setIcon(R.drawable.img_main_chat_16dp)
-            .setTitle("종료")
-            .setMessage("정말 종료하시겠습니까?")
-            .setPositiveButton("확인") { _, _ ->
+            .setTitle(getString(R.string.common_end))
+            .setMessage(getString(R.string.dialog_end_again))
+            .setPositiveButton(getString(R.string.common_confirm)) { _, _ ->
                 super.onBackPressed()
             }
-            .setNegativeButton("취소", null)
+            .setNegativeButton(getString(R.string.common_cancel), null)
             .show()
     }
 
@@ -197,8 +197,8 @@ class MainActivity : AppCompatActivity() {
         noticeBuilder.run {
             setSmallIcon(R.drawable.img_notice_icon)
             setWhen(System.currentTimeMillis())
-            setContentTitle("키워드 알림")
-            setContentText("선택한 키워드에 대한 알림이 도착햇습니다!")
+            setContentTitle(getString(R.string.notice_keyword))
+            setContentText(getString(R.string.notice_keyword_message))
         }
 
         noticeManager.notify(1, noticeBuilder.build())
