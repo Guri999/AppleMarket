@@ -45,7 +45,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * @return userlike데이터 확인후 이미지 리소스값 반환
      */
     fun setLike(position: Int): Int{
-        return if (PostData.totalPost[position].userlike == 1) R.drawable.img_all_like
+        return if (PostData.totalPost[position].userlike) R.drawable.img_all_like
         else R.drawable.img_all_emptylike
     }
 
@@ -67,15 +67,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      */
     fun onClickLike(data: Post) {
         PostData.totalPost.find { it == data }?.let {
-            if (data.userlike == 0) {
-                it.userlike = 1
-                it.like++
+            if (data.userlike) {
+                it.userlike = false
+                it.like--
             } else {
-                PostData.totalPost.find { it == data }?.let {
-                    it.userlike = 0
-                    it.like--
+                it.userlike = true
+                it.like++
                 }
-            }
             _postData.value = it
         }
     }

@@ -17,7 +17,7 @@ data class Post(
     val address: String,
     var like: Int,
     var chat: Int,
-    var userlike: Int = 0
+    var userlike: Boolean = false
 ) : Parcelable
 
 /**
@@ -65,5 +65,5 @@ object PostData {
      * 그 다음 데이터를 갱신, 1을가진 요소와 인덱스값이 같은 포스터가 있다면 EntryType을 Like로 변경하고 좋아요가 눌린채로 등장하게 한다
      */
 
-    var userLike = MutableList<Int>(totalPost.size) { 0 }
+//    var userLike = MutableList<Int>(totalPost.size) { 0 }
 }

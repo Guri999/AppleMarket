@@ -49,8 +49,8 @@ class DetailActivity : AppCompatActivity() {
         append(String.format("%,d", data.price))
         append(getString(R.string.all_money))
     }
-                if (data.userlike == 0) it.ivDetailLike.setImageResource(R.drawable.img_all_emptylike)
-                else it.ivDetailLike.setImageResource(R.drawable.img_all_like)
+                if (data.userlike) it.ivDetailLike.setImageResource(R.drawable.img_all_like)
+                else it.ivDetailLike.setImageResource(R.drawable.img_all_emptylike)
                 it.tvDetailDetail.text = data.detail
             }
         }
