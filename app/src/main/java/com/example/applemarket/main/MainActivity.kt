@@ -3,18 +3,17 @@ package com.example.applemarket.main
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.RingtoneManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.Detail.DetailActivity
-import com.example.applemarket.PostData
 import com.example.applemarket.PostData.totalPost
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding
@@ -45,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         setPost()
 
         setNoticebtn()
+
+        setFab()
     }
 
     /**
@@ -83,6 +84,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * TODO fab 스크롤 이벤트 추가
+     *
+     * 리사이클러뷰 관련해서 엄청 찾아봤는데
+     * 생각해보니 액션바 때문에 네스티드뷰로 감싸서 리사이클러뷰를 드래그하는게 아니었다
+     * 네스티드뷰에 스크롤리스너를 달아서 해결
+     */
+    private fun setFab() {
+        binding.rcMainPost.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(-1)){
+                    binding.faMainFab.animate().alpha(0f).setDuration(300).withEndAction {
+                        binding.faMainFab.visibility = View.GONE
+                    }
+                } else {
+                    binding.faMainFab.visibility = View.VISIBLE
+                    binding.faMainFab.animate().alpha(1f).setDuration(300)
+                }
+            }
+        })
+
+        onClickFab()
+    }
+    private fun onClickFab(){
+        binding.faMainFab.setOnClickListener{
+            binding.rcMainPost.scrollToPosition(0)
+        }
+    }
+    /**
      * TODO 롱클릭시 액션 설정
      *
      * 다이얼로그 출력
@@ -109,6 +139,7 @@ class MainActivity : AppCompatActivity() {
      * TODO
      * 안드로이드 백 버튼 클릭시 다이얼로그
      */
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         AlertDialog.Builder(this)
             .setIcon(R.drawable.img_main_chat_16dp)
@@ -127,11 +158,11 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setNoticebtn() {
         binding.ivMainNotice.setOnClickListener {
-            Notice()
+            setNotice()
         }
     }
 
-    private fun Notice() {
+    private fun setNotice() {
         noticeManager.createNotificationChannel(
             NotificationChannel(
                 "main-channel",
