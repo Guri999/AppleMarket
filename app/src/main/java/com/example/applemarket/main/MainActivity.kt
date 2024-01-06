@@ -5,12 +5,14 @@ import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.applemarket.PostData
 import com.example.applemarket.PostData.totalPost
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding

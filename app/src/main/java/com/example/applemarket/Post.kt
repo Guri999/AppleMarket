@@ -31,26 +31,30 @@ data class Post(
 
 object PostData {
     var totalPost: MutableList<Post> = arrayListOf()
-
+    var canLoad = true
     fun Context.loadList(context: Context) {
-        val assetManager = context.assets
-        val inputStream = assetManager.open("dummy_data.tsv")
-        val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-        bufferedReader.forEachLine {
-            val tokens = it.split("\t")
-            val resource = context.resources.getIdentifier(tokens[1],"drawable", context.packageName)
-            val post = Post(
-                tokens[0].toInt(),
-                resource,
-                tokens[2],
-                tokens[3].replace("\\n", "\n").replace(" + ", "").replace("\"", ""),
-                tokens[4],
-                tokens[5].toInt(),
-                tokens[6],
-                tokens[7].toInt(),
-                tokens[8].toInt()
-            )
-            PostData.totalPost.add(post)
+        if (canLoad) {
+            canLoad = false
+            val assetManager = context.assets
+            val inputStream = assetManager.open("dummy_data.tsv")
+            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+            bufferedReader.forEachLine {
+                val tokens = it.split("\t")
+                val resource =
+                    context.resources.getIdentifier(tokens[1], "drawable", context.packageName)
+                val post = Post(
+                    tokens[0].toInt(),
+                    resource,
+                    tokens[2],
+                    tokens[3].replace("\\n", "\n").replace(" + ", "").replace("\"", ""),
+                    tokens[4],
+                    tokens[5].toInt(),
+                    tokens[6],
+                    tokens[7].toInt(),
+                    tokens[8].toInt()
+                )
+                PostData.totalPost.add(post)
+            }
         }
     }
 
@@ -61,5 +65,5 @@ object PostData {
      * 그 다음 데이터를 갱신, 1을가진 요소와 인덱스값이 같은 포스터가 있다면 EntryType을 Like로 변경하고 좋아요가 눌린채로 등장하게 한다
      */
 
-    var userLike = MutableList<Int>(totalPost.size){ 0 }
+    var userLike = MutableList<Int>(totalPost.size) { 0 }
 }
