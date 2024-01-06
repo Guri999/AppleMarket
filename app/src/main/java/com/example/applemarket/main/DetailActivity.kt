@@ -1,4 +1,4 @@
-package com.example.applemarket.Detail
+package com.example.applemarket.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,10 +14,7 @@ class DetailActivity : AppCompatActivity() {
         ActivityDetailBinding.inflate(layoutInflater)
     }
     private val viewModel by lazy {
-        ViewModelProvider(this).get(DetailViewModel::class.java)
-    }
-    private val postData by lazy {
-        intent.getParcelableExtra<Post>("data")
+        ViewModelProvider(this)[MainViewModel::class.java]
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +24,22 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        setInfo()
+        intent.getParcelableExtra<Post>("data")?.let { viewModel.setPost(it) }
+        viewModel.postData.observe(this, Observer {
+            setInfo(it)
+        })
 
         setBackBtn()
     }
 
     /**
      * TODO
-     *  파셀라이즈 데이터를 받고
+     *  파셀라이즈 데이터를 라이브 데이터로 받는다
      *
      *  그걸 바탕으로 액티비티에 정보를 갱신
      */
-    private fun setInfo() {
-        postData!!.also { data ->
+    private fun setInfo(post: Post) {
+        post.also { data ->
             binding.also {
                 it.ivDetailImg.setImageResource(data.img)
                 it.tvDetailSeller.text = data.user
@@ -49,11 +49,19 @@ class DetailActivity : AppCompatActivity() {
         append(String.format("%,d", data.price))
         append(getString(R.string.all_money))
     }
+                if (data.userlike == 0) it.ivDetailLike.setImageResource(R.drawable.img_all_emptylike)
+                else it.ivDetailLike.setImageResource(R.drawable.img_all_like)
                 it.tvDetailDetail.text = data.detail
             }
         }
+        setLikeBtn(post)
     }
 
+    private fun setLikeBtn(post: Post){
+        binding.ivDetailLike.setOnClickListener {
+            viewModel.onClickLike(post)
+        }
+    }
     private fun setBackBtn(){
         binding.ivDetailBack.setOnClickListener {
             finish()

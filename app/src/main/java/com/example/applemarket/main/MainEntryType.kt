@@ -1,8 +1,9 @@
 package com.example.applemarket.main
 
 enum class MainEntryType {
+    Like,
     MEMBER,
-    NONE
+    NONE,
     ;
 
     companion object{

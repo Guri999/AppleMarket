@@ -64,6 +64,8 @@ class MainAdapter(private var data: MutableList<Post>,private val viewModel: Mai
     }
         holder.tvChat.text = data[position].chat.toString()
         holder.tvLike.text = data[position].like.toString()
+        //좋아요 표시하는 데이터 처리는 뷰모델에서 처리
+        holder.ivLike.setImageResource(viewModel.setLike(position))
 
         onDeletePost(holder,position)
     }

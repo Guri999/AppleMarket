@@ -5,15 +5,12 @@ import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.applemarket.Detail.DetailActivity
 import com.example.applemarket.PostData.totalPost
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding
@@ -38,6 +35,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         init()
+    }
+
+    /**
+     * 매인 액티비티가 다시 활성화 될때 데이터 갱신
+     *
+     * 생명주기가 onResume일때
+     * 즉 사용자와 상호작용하기 전에 데이터 값을 갱신해준다
+     */
+    override fun onResume() {
+        super.onResume()
+        viewModel.setData()
     }
 
     private fun init() {
@@ -89,6 +97,9 @@ class MainActivity : AppCompatActivity() {
      * 리사이클러뷰 관련해서 엄청 찾아봤는데
      * 생각해보니 액션바 때문에 네스티드뷰로 감싸서 리사이클러뷰를 드래그하는게 아니었다
      * 네스티드뷰에 스크롤리스너를 달아서 해결
+     * 생각해보니 네스티드뷰를 사용하면 리사이클러뷰의 장점을 죽이는 것 같다
+     * 리사이클러뷰와 fab appbar, 과제에 아주 적합한 레이아웃인 코디네이터 레이아웃으로 바꾸고
+     * 다시 리사이클러뷰 관련 코드로 변경
      */
     private fun setFab() {
         binding.rcMainPost.addOnScrollListener(object : RecyclerView.OnScrollListener(){
