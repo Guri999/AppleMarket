@@ -25,28 +25,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
-                <TextView
-                    android:id="@+id/text1"
+                <Spinner
+                    android:id="@+id/sp_main_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="@string/main_naebaecam"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/spinner_register_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:rotation="90"
-                    android:src="@drawable/img_main_downarrow"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/text1"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView

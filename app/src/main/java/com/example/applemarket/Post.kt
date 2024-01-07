@@ -68,4 +68,6 @@ object PostData {
      */
 
 //    var userLike = MutableList<Int>(totalPost.size) { 0 }
+
+    var locate = listOf("내배캠동","내배캠서","내배캠남","내배캠북","내배캠시","내배캠구","내배캠군","내배캠쨩")
 }
