@@ -10,10 +10,12 @@ enum class InteractionMessage(
     //Common
     CONFIRM(R.string.common_confirm),
     CANCEL(R.string.common_cancel),
+    END(R.string.common_end),
 
     //Dialog
     DELETEPRODUCT(R.string.dialog_del_product),
     DELETEMESSAGE(R.string.dialog_del_again),
+    ENDMESSAGE(R.string.dialog_end_again),
 
     //Notification
     NOTICEKEYWORD(R.string.notice_keyword),
