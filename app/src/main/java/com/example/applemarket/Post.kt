@@ -1,5 +1,6 @@
 package com.example.applemarket
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Parcelable
 import java.io.BufferedReader
@@ -32,6 +33,7 @@ data class Post(
 object PostData {
     var totalPost: MutableList<Post> = arrayListOf()
     var canLoad = true
+    @SuppressLint("DiscouragedApi")
     fun Context.loadList(context: Context) {
         if (canLoad) {
             canLoad = false

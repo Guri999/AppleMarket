@@ -173,8 +173,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupDialog(dialog: AlertDialog, title: InteractionMessage, message: InteractionMessage, confirmAction: (AlertDialog) -> Unit, cancelAction: (AlertDialog) -> Unit) {
         dialog.findViewById<TextView>(R.id.tv_dia_title)?.setText(title.message)
         dialog.findViewById<TextView>(R.id.tv_dia_message)?.setText(message.message)
-        dialog.findViewById<TextView>(R.id.tv_dia_confirm)?.setOnClickListener { confirmAction(dialog) }
-        dialog.findViewById<TextView>(R.id.tv_dia_cancel)?.setOnClickListener { cancelAction(dialog) }
+        dialog.findViewById<TextView>(R.id.bt_dia_confirm)?.setOnClickListener { confirmAction(dialog) }
+        dialog.findViewById<TextView>(R.id.bt_dia_cancel)?.setOnClickListener { cancelAction(dialog) }
     }
 
     /**
