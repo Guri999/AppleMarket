@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.applemarket.InteractionMessage
 import com.example.applemarket.Post
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityDetailBinding
@@ -17,6 +18,7 @@ class DetailActivity : AppCompatActivity() {
     private val viewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -24,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         intent.getParcelableExtra<Post>("data")?.let { viewModel.setPost(it) }
         viewModel.postData.observe(this, Observer {
             setInfo(it)
@@ -47,9 +49,9 @@ class DetailActivity : AppCompatActivity() {
                 it.tvDetailAddress.text = data.address
                 it.tvDetailPostname.text = data.name
                 it.tvDetailPrice.text = buildString {
-        append(String.format("%,d", data.price))
-        append(getString(R.string.all_money))
-    }
+                    append(String.format("%,d", data.price))
+                    append(getString(R.string.all_money))
+                }
                 if (data.userlike) it.ivDetailLike.setImageResource(R.drawable.img_all_like)
                 else it.ivDetailLike.setImageResource(R.drawable.img_all_emptylike)
                 it.tvDetailDetail.text = data.detail
@@ -70,13 +72,18 @@ class DetailActivity : AppCompatActivity() {
      * 그건 뷰모델과 관련있는데 뷰모델과 액티비티는 서로 독립적으로 진행되기 때문에
      * 뷰모델에선 계산하는데 스낵바로직이 바로 실행됬기 때문인걸로 추정된다
      */
-    private fun setLikeBtn(post: Post){
+    private fun setLikeBtn(post: Post) {
         binding.ivDetailLike.setOnClickListener {
-            if (post.userlike.not()) Snackbar.make(binding.tvDetailPrice,"관심 목록에 추가되었습니다",Snackbar.LENGTH_LONG).show()
+            if (post.userlike.not()) Snackbar.make(
+                binding.tvDetailPrice,
+                InteractionMessage.SNACKPLUS.message,
+                Snackbar.LENGTH_LONG
+            ).show()
             viewModel.onClickLike(post)
         }
     }
-    private fun setBackBtn(){
+
+    private fun setBackBtn() {
         binding.ivDetailBack.setOnClickListener {
             finish()
         }

@@ -13,6 +13,7 @@ import com.example.applemarket.PostData.loadList
 import com.example.applemarket.R
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+
     private val _totalPost: MutableLiveData<MutableList<Post>> = MutableLiveData()
     val totalPost: LiveData<MutableList<Post>> get() = _totalPost
 
@@ -24,7 +25,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         context.loadList(context)
         setData()
     }
-    fun setData(){
+
+    fun setData() {
         _totalPost.value = PostData.totalPost
     }
 
@@ -44,7 +46,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * @param position 포스트 위치
      * @return userlike데이터 확인후 이미지 리소스값 반환
      */
-    fun setLike(position: Int): Int{
+    fun setLike(position: Int): Int {
         return if (PostData.totalPost[position].userlike) R.drawable.img_all_like
         else R.drawable.img_all_emptylike
     }
@@ -73,7 +75,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             } else {
                 it.userlike = true
                 it.like++
-                }
+            }
             _postData.value = it
         }
     }

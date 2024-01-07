@@ -3,10 +3,8 @@ package com.example.applemarket.main
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -14,7 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.applemarket.PostData
+import com.example.applemarket.InteractionImage
+import com.example.applemarket.InteractionMessage
 import com.example.applemarket.PostData.totalPost
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding
@@ -149,13 +148,13 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setDelDialog(position: Int) {
         AlertDialog.Builder(this)
-            .setIcon(R.drawable.img_main_chat_16dp)
-            .setTitle(getString(R.string.dialog_del_product))
-            .setMessage(getString(R.string.dialog_del_again))
-            .setPositiveButton(getString(R.string.common_confirm)) { _, _ ->
+            .setIcon(InteractionImage.CHAT.img)
+            .setTitle(getString(InteractionMessage.DELETEPRODUCT.message))
+            .setMessage(getString(InteractionMessage.DELETEMESSAGE.message))
+            .setPositiveButton(getString(InteractionMessage.CONFIRM.message)) { _, _ ->
                 viewModel.deletePost(position)
             }
-            .setNegativeButton(getString(R.string.common_cancel), null)
+            .setNegativeButton(getString(InteractionMessage.CANCEL.message), null)
             .show()
     }
 
@@ -201,10 +200,10 @@ class MainActivity : AppCompatActivity() {
         noticeManager.createNotificationChannel(
             NotificationChannel(
                 "main-channel",
-                getString(R.string.notice_keyword),
+                getString(InteractionMessage.NOTICEKEYWORD.message),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = getString(R.string.notice_keyword_info)
+                description = getString(InteractionMessage.NOTICEKEYWORDINFO.message)
                 /**
                 setSound(
                 RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
@@ -219,8 +218,8 @@ class MainActivity : AppCompatActivity() {
         noticeBuilder.run {
             setSmallIcon(R.drawable.img_notice_icon)
             setWhen(System.currentTimeMillis())
-            setContentTitle(getString(R.string.notice_keyword))
-            setContentText(getString(R.string.notice_keyword_message))
+            setContentTitle(getString(InteractionMessage.NOTICEKEYWORD.message))
+            setContentText(getString(InteractionMessage.NOTICEKEYWORDMESSAGE.message))
         }
 
         noticeManager.notify(1, noticeBuilder.build())
