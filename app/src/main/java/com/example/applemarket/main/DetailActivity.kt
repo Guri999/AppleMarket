@@ -2,7 +2,6 @@ package com.example.applemarket.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.applemarket.InteractionMessage
 import com.example.applemarket.Post
@@ -10,6 +9,7 @@ import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityDetailBinding
 import com.google.android.material.snackbar.Snackbar
 
+@Suppress("DEPRECATION")
 class DetailActivity : AppCompatActivity() {
 
     private val binding by lazy {
@@ -28,9 +28,9 @@ class DetailActivity : AppCompatActivity() {
 
     private fun init() {
         intent.getParcelableExtra<Post>("data")?.let { viewModel.setPost(it) }
-        viewModel.postData.observe(this, Observer {
+        viewModel.postData.observe(this) {
             setInfo(it)
-        })
+        }
 
         setBackBtn()
     }
@@ -61,7 +61,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     /**
-     * 스낵바 출력 구현
+     * TODO 스낵바 출력 구현
      *
      * 맨처음 눌렀을때 좋아요 이미지가 빈하트면 스낵바가 안뜨고
      * 하트이미지가 변경되긴하는데 다시눌러서 빈하트를 만들고 또 다시 눌러야 스낵바가 뜸

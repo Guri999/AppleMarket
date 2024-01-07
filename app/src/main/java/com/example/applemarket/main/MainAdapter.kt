@@ -1,12 +1,11 @@
 package com.example.applemarket.main
 
-import android.util.Log
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.Post
-import com.example.applemarket.PostData
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ItemMainPostBinding
 
@@ -45,6 +44,7 @@ class MainAdapter(private var data: MutableList<Post>,private val viewModel: Mai
      *
      * 변화가 있다면 데이터를 갱신할것이다
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun getData(newData: MutableList<Post>){
         data = newData
         notifyDataSetChanged()
@@ -76,13 +76,13 @@ class MainAdapter(private var data: MutableList<Post>,private val viewModel: Mai
      * @param holder 리사이클러뷰 각 테이블의 위젯
      * @param position 위치
      */
-    fun onDeletePost(holder: Holder, position: Int) {
+    private fun onDeletePost(holder: Holder, position: Int) {
         holder.itemView.setOnLongClickListener {
             itemLongClick?.onLongClick(it, position)
             true
         }
     }
-    inner class Holder(val binding: ItemMainPostBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(private val binding: ItemMainPostBinding) : RecyclerView.ViewHolder(binding.root) {
         val ivPost = binding.ivMainPost
         val tvName = binding.tvMainName
         val tvLocation = binding.tvMainLocation

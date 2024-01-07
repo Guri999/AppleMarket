@@ -1,9 +1,6 @@
 package com.example.applemarket.main
 
 import android.app.Application
-import android.content.Context
-import android.icu.text.Transliterator.Position
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,6 +17,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _postData: MutableLiveData<Post> = MutableLiveData()
     val postData: LiveData<Post> get() = _postData
 
+    /**
+     * Todo 처음 실행시 더미데이터에서 데이터 로드
+    */
     init {
         val context = getApplication<Application>().applicationContext
         context.loadList(context)
@@ -31,7 +31,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * 데이터에서 특정 포스트 제거
+     * TODO 데이터에서 특정 포스트 제거
      *
      * @param position 포스트 위치
      */
@@ -41,7 +41,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * 좋아요 이미지 반환
+     * TODO 좋아요 이미지 반환
      *
      * @param position 포스트 위치
      * @return userlike데이터 확인후 이미지 리소스값 반환
@@ -52,7 +52,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * 디테일 페이지에서 포스트 갱신
+     * TODO 디테일 페이지에서 포스트 갱신
      *
      * @param data totalPost의 요소
      */
@@ -61,7 +61,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
-     * 좋아요 버튼 클릭 액션
+     * TODO 좋아요 버튼 클릭 액션
      *
      * @param data totalPost에서 출력되는 포스트
      * totalPost에서 data와 같은 요소를 찾고 값을 변경해줌
