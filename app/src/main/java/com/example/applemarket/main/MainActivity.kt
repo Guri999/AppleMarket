@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.InteractionMessage
 import com.example.applemarket.PostData
+import com.example.applemarket.PostData.loadList
 import com.example.applemarket.PostData.locate
 import com.example.applemarket.PostData.totalPost
 import com.example.applemarket.R
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        loadList(this)
         init()
     }
 

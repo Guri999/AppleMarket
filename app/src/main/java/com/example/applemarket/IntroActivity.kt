@@ -26,6 +26,6 @@ class IntroActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }, 1000) // 3초 후에 MainActivity로 전환
+        }, 1000)
     }
 }

@@ -21,8 +21,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * Todo 처음 실행시 더미데이터에서 데이터 로드
     */
     init {
-        val context = getApplication<Application>().applicationContext
-        context.loadList(context)
+
         setData()
     }
 

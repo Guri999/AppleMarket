@@ -34,7 +34,7 @@ object PostData {
     var totalPost: MutableList<Post> = arrayListOf()
     var canLoad = true
     @SuppressLint("DiscouragedApi")
-    fun Context.loadList(context: Context) {
+    fun loadList(context: Context) {
         if (canLoad) {
             canLoad = false
             val assetManager = context.assets
