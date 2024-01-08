@@ -39,16 +39,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         setData()
     }
 
-    /**
-     * TODO 좋아요 이미지 반환
-     *
-     * @param position 포스트 위치
-     * @return userlike데이터 확인후 이미지 리소스값 반환
-     */
-    fun setLike(position: Int): Int {
-        return if (PostData.totalPost[position].userlike) R.drawable.img_all_like
-        else R.drawable.img_all_emptylike
-    }
 
     /**
      * TODO 디테일 페이지에서 포스트 갱신

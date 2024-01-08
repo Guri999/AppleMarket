@@ -9,23 +9,25 @@ import com.example.applemarket.Post
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ItemMainPostBinding
 
-class MainAdapter(private var data: MutableList<Post>,private val viewModel: MainViewModel) : RecyclerView.Adapter<MainAdapter.Holder>() {
+class MainAdapter(private var data: MutableList<Post>, private val viewModel: MainViewModel) :
+    RecyclerView.Adapter<MainAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
 
     }
 
-    var itemClick : ItemClick? = null
+    var itemClick: ItemClick? = null
 
-    interface ItemLongClick{
+    interface ItemLongClick {
 
         fun onLongClick(view: View, position: Int)
     }
 
-    var itemLongClick : ItemLongClick? = null
+    var itemLongClick: ItemLongClick? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemMainPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemMainPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 
@@ -45,7 +47,7 @@ class MainAdapter(private var data: MutableList<Post>,private val viewModel: Mai
      * 변화가 있다면 데이터를 갱신할것이다
      */
     @SuppressLint("NotifyDataSetChanged")
-    fun getData(newData: MutableList<Post>){
+    fun getData(newData: MutableList<Post>) {
         data = newData
         notifyDataSetChanged()
     }
@@ -59,15 +61,18 @@ class MainAdapter(private var data: MutableList<Post>,private val viewModel: Mai
         holder.tvName.text = data[position].name
         holder.tvLocation.text = data[position].address
         holder.tvPrice.text = buildString {
-        append(String.format("%,d", data[position].price))
-        append(holder.itemView.context.getString(R.string.all_money))
-    }
+            append(String.format("%,d", data[position].price))
+            append(holder.itemView.context.getString(R.string.all_money))
+        }
         holder.tvChat.text = data[position].chat.toString()
         holder.tvLike.text = data[position].like.toString()
-        //좋아요 표시하는 데이터 처리는 뷰모델에서 처리
-        holder.ivLike.setImageResource(viewModel.setLike(position))
 
-        onDeletePost(holder,position)
+        holder.ivLike.setImageResource(
+            if (data[position].userlike) R.drawable.img_all_like
+            else R.drawable.img_all_emptylike
+        )
+
+        onDeletePost(holder, position)
     }
 
     /**
@@ -82,7 +87,9 @@ class MainAdapter(private var data: MutableList<Post>,private val viewModel: Mai
             true
         }
     }
-    inner class Holder(private val binding: ItemMainPostBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class Holder(private val binding: ItemMainPostBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val ivPost = binding.ivMainPost
         val tvName = binding.tvMainName
         val tvLocation = binding.tvMainLocation
