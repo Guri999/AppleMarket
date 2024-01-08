@@ -9,7 +9,7 @@ import com.example.applemarket.Post
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ItemMainPostBinding
 
-class MainAdapter(private var data: MutableList<Post>, private val viewModel: MainViewModel) :
+class MainAdapter(private var data: MutableList<Post>) :
     RecyclerView.Adapter<MainAdapter.Holder>() {
 
     interface ItemClick {

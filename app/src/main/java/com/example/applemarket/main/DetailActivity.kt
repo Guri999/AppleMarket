@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.applemarket.InteractionMessage
 import com.example.applemarket.Post
+import com.example.applemarket.PostRepository
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityDetailBinding
 import com.google.android.material.snackbar.Snackbar
@@ -15,8 +16,11 @@ class DetailActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
+    private val postRepository by lazy {
+        PostRepository(this)
+    }
     private val viewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+        ViewModelProvider(this, MainViewModelFactory(postRepository))[MainViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
