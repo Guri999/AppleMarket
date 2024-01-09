@@ -64,6 +64,6 @@
         android:src="@drawable/img_main_floating"
         app:backgroundTint="@color/fab"
         app:fabCustomSize="32dp"
-        app:fabSize="normal"
+        app:fabSize="mini"
         app:maxImageSize="12dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

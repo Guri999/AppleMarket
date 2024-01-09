@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -16,9 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.InteractionMessage
 import com.example.applemarket.PostData
-import com.example.applemarket.PostData.loadList
-import com.example.applemarket.PostData.locate
-import com.example.applemarket.PostData.totalPost
+import com.example.applemarket.PostRepository
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding
 
@@ -27,10 +26,13 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private val viewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+    private val postRepository by lazy {
+        PostRepository()
     }
-    private val adapter by lazy { MainAdapter(mutableListOf(), viewModel) }
+    private val viewModel by lazy {
+        ViewModelProvider(this, MainViewModelFactory(postRepository))[MainViewModel::class.java]
+    }
+    private val adapter by lazy { MainAdapter(mutableListOf()) }
 
     private val noticeBuilder by lazy {
         NotificationCompat.Builder(this, "main-channel")
@@ -42,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        loadList(this)
         init()
     }
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onResume() {
         super.onResume()
-        viewModel.setData()
+        setPost()
     }
 
     private fun init() {
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
      * 갱신된 데이터를 옵저빙해서 어뎁터에 넘겨준다
      */
     private fun setPost() {
+        viewModel.setList()
         binding.rcMainPost.layoutManager = LinearLayoutManager(this@MainActivity)
         binding.rcMainPost.adapter = adapter
         viewModel.totalPost.observe(this) { post ->
@@ -96,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         adapter.itemClick = object : MainAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("data", totalPost[position])
+                intent.putExtra("data", viewModel.totalPost.value?.get(position))
                 startActivity(intent)
             }
         }
