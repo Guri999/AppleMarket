@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val postRepository by lazy {
-        PostRepository(this)
+        PostRepository()
     }
     private val viewModel by lazy {
         ViewModelProvider(this, MainViewModelFactory(postRepository))[MainViewModel::class.java]
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
      * 갱신된 데이터를 옵저빙해서 어뎁터에 넘겨준다
      */
     private fun setPost() {
+        viewModel.setList()
         binding.rcMainPost.layoutManager = LinearLayoutManager(this@MainActivity)
         binding.rcMainPost.adapter = adapter
         viewModel.totalPost.observe(this) { post ->

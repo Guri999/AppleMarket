@@ -14,11 +14,8 @@ class MainViewModel(private val postRepository: PostRepository) : ViewModel() {
     private val _postData: MutableLiveData<Post> = MutableLiveData()
     val postData: LiveData<Post> get() = _postData
 
-    /**
-     * Todo 처음 실행시 더미데이터에서 데이터 로드
-    */
-    init {
-        postRepository.loadList()
+    fun setList() {
+        postRepository.setList()
         _totalPost.value = postRepository.totalPost
     }
 

@@ -2,42 +2,15 @@ package com.example.applemarket
 
 import android.content.Context
 import android.util.Log
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 
+class PostRepository {
 
-class PostRepository(private val context: Context) {
+    var totalPost: MutableList<Post> = mutableListOf()
+    var detailPost: Post? = null
 
-    lateinit var totalPost: MutableList<Post>
-    lateinit var detailPost: Post
-    private var canLoad = true
-
-    fun loadList() {
-        if (canLoad) {
-            canLoad = false
-            val assetManager = context.assets
-            val inputStream = assetManager.open("dummy_data.tsv")
-            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-            bufferedReader.forEachLine {
-                val tokens = it.split("\t")
-                val resource =
-                    context.resources.getIdentifier(tokens[1], "drawable", context.packageName)
-                val post = Post(
-                    tokens[0].toInt(),
-                    resource,
-                    tokens[2],
-                    tokens[3].replace("\\n", "\n").replace(" + ", "").replace("\"", ""),
-                    tokens[4],
-                    tokens[5].toInt(),
-                    tokens[6],
-                    tokens[7].toInt(),
-                    tokens[8].toInt()
-                )
-                PostData.totalPost.add(post)
-                totalPost = PostData.totalPost
-            }
-        }
+    fun setList(){
+        totalPost = PostData.totalPost
     }
 
     /**
@@ -66,8 +39,8 @@ class PostRepository(private val context: Context) {
                 post.like++
             }
             detailPost = post
-            totalPost = PostData.totalPost
         }
+        totalPost = PostData.totalPost
     }
 
 }

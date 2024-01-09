@@ -17,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
         ActivityDetailBinding.inflate(layoutInflater)
     }
     private val postRepository by lazy {
-        PostRepository(this)
+        PostRepository()
     }
     private val viewModel by lazy {
         ViewModelProvider(this, MainViewModelFactory(postRepository))[MainViewModel::class.java]
