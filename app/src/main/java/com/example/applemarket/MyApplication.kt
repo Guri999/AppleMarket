@@ -1,7 +1,6 @@
 package com.example.applemarket
 
 import android.app.Application
-import android.util.Log
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -11,7 +10,7 @@ class MyApplication : Application() {
         super.onCreate()
 
         loadList()
-        PostRepository().setList()
+        PostRepositoryImpl().setList()
     }
 
     private fun loadList() {
