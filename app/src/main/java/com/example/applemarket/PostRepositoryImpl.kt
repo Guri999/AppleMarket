@@ -1,10 +1,7 @@
 package com.example.applemarket
 
-import android.content.Context
-import android.util.Log
-
-interface Repository{
-    fun setList()
+interface PostRepository{
+    fun setList(): MutableList<Post>
     /**
      * TODO 데이터에서 특정 포스트 제거
      *
@@ -20,15 +17,16 @@ interface Repository{
      * 본래라면 UseCase에서 로직을 수행하는게 맞겠지만
      * 그렇게되면 보일러 플레이트 코드도 많아지고 간단한 로직이기 때문에 그냥 Repository에서 수행
      */
-    fun onClickLike(data: Post)
+    fun onClickLike(data: Post): Post?
 }
-class PostRepository: Repository{
+class PostRepositoryImpl: PostRepository {
 
     var totalPost: MutableList<Post> = mutableListOf()
     var detailPost: Post? = null
 
-    override fun setList(){
+    override fun setList(): MutableList<Post> {
         totalPost = PostData.totalPost
+        return totalPost
     }
 
     override fun deletePost(position: Int) {
@@ -36,7 +34,7 @@ class PostRepository: Repository{
         totalPost = PostData.totalPost
     }
 
-    override fun onClickLike(data: Post) {
+    override fun onClickLike(data: Post): Post? {
         PostData.totalPost.find { it == data }?.let { post ->
             if (data.userlike) {
                 post.userlike = false
@@ -48,6 +46,7 @@ class PostRepository: Repository{
             detailPost = post
         }
         totalPost = PostData.totalPost
+        return detailPost
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.applemarket.Post
 import com.example.applemarket.PostRepository
+import com.example.applemarket.PostRepositoryImpl
 
 class MainViewModel(private val postRepository: PostRepository) : ViewModel() {
 
@@ -16,7 +17,7 @@ class MainViewModel(private val postRepository: PostRepository) : ViewModel() {
 
     fun setList() {
         postRepository.setList()
-        _totalPost.value = postRepository.totalPost
+        _totalPost.value = postRepository.setList()
     }
 
     /**
@@ -30,12 +31,12 @@ class MainViewModel(private val postRepository: PostRepository) : ViewModel() {
 
     fun deletePost(position: Int) {
         postRepository.deletePost(position)
-        _totalPost.value = postRepository.totalPost
+        _totalPost.value = postRepository.setList()
     }
 
     fun onClickLike(data: Post) {
         postRepository.onClickLike(data)
-        _totalPost.value = postRepository.totalPost
-        _postData.value = postRepository.detailPost
+        _totalPost.value = postRepository.setList()
+        _postData.value = postRepository.onClickLike(data)
     }
 }

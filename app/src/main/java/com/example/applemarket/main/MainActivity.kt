@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.InteractionMessage
 import com.example.applemarket.PostData
-import com.example.applemarket.PostRepository
+import com.example.applemarket.PostRepositoryImpl
 import com.example.applemarket.R
 import com.example.applemarket.databinding.ActivityMainBinding
 
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val postRepository by lazy {
-        PostRepository()
+        PostRepositoryImpl()
     }
     private val viewModel by lazy {
         ViewModelProvider(this, MainViewModelFactory(postRepository))[MainViewModel::class.java]
